@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tail:*)",
+      "Bash(cd \"C:/Users/User/OneDrive/Рабочий стол/Mars/nF-2506/6-Oy/7-dars\" && mkdir -p src/components/common/Header src/components/common/Footer src/components/home src/components/blog src/components/shop src/components/shared src/pages/Home src/pages/About src/pages/Contact src/pages/Blog src/pages/BlogDetail src/pages/Shop src/pages/ProductDetail src/router src/services src/hooks src/context docs nest-backend/src/config nest-backend/src/models nest-backend/src/routes nest-backend/src/controllers nest-backend/src/middleware 2>&1)",
+      "Bash(cd:*)",
+      "Bash(cd \"C:/Users/User/OneDrive/Рабочий стол/Mars/nF-2506/6-Oy/7-dars\" && mv src public docs package.json package-lock.json vite.config.js eslint.config.js index.html README.md .env.example .gitignore frontend/ 2>&1)",
+      "Bash(cd \"C:/Users/User/OneDrive/Рабочий стол/Mars/nF-2506/6-Oy/7-dars\" && cp -r src frontend/ && cp -r public frontend/ && cp -r docs frontend/ 2>&1)"
+    ]
+  }
+}
