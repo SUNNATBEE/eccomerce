@@ -25,6 +25,7 @@ import {
   FiInstagram,
   FiYoutube,
 } from "react-icons/fi";
+import NewsletterBanner from "../../shared/NewsletterBanner";
 
 // Footer kolumnlari - Company havolalar
 const COMPANY_LINKS = [
@@ -59,37 +60,7 @@ const Footer = () => {
   return (
     <footer className="bg-white mt-auto">
       {/* ===== NEWSLETTER BANNER ===== */}
-      <div className="bg-green-500 py-8">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Chap matn */}
-            <div className="text-white">
-              <h3 className="text-xl font-bold">
-                Stay home & get your daily needs
-              </h3>
-              <p className="text-green-100 text-sm">
-                Start Your Daily Shopping with{" "}
-                <span className="font-bold">Nest Mart</span>
-              </p>
-            </div>
-
-            {/* Email forma */}
-            <form className="flex w-full md:w-auto md:min-w-96">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 px-4 py-3 rounded-l-full text-sm outline-none bg-white text-gray-700"
-              />
-              <button
-                type="submit"
-                className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-r-full text-sm font-medium transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
+      <NewsletterBanner />
 
       {/* ===== ASOSIY FOOTER ===== */}
       <div className="border-t border-gray-200 py-10">
@@ -110,15 +81,15 @@ const Footer = () => {
               {/* Aloqa */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <FiMapPin className="text-green-500 flex-shrink-0" size={14} />
+                  <FiMapPin className="text-green-500 shrink-0" size={14} />
                   <span>123 Amir Temur Street, Tashkent</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <FiPhone className="text-green-500 flex-shrink-0" size={14} />
+                  <FiPhone className="text-green-500 shrink-0" size={14} />
                   <span>(+998) 1900-888</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <FiMail className="text-green-500 flex-shrink-0" size={14} />
+                  <FiMail className="text-green-500 shrink-0" size={14} />
                   <span>info@nestmart.uz</span>
                 </div>
               </div>

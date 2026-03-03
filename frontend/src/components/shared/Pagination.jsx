@@ -51,7 +51,7 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
         disabled={currentPage === 1}
         className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 hover:border-green-500 hover:text-green-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
-        <FiChevronLeft size={16} />
+        <FiChevronLeft size={16} className="text-black" />
       </button>
 
       {/* Sahifa raqamlari */}
@@ -59,7 +59,7 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`w-8 h-8 flex items-center justify-center rounded text-sm font-medium transition-colors ${
+          className={`w-8 h-8 flex items-center justify-center rounded text-sm font-medium transition-colors text-black ${
             currentPage === page
               ? "bg-green-500 text-white border border-green-500"
               : "border border-gray-200 hover:border-green-500 hover:text-green-600"
@@ -75,7 +75,7 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
         disabled={currentPage === totalPages}
         className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 hover:border-green-500 hover:text-green-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
-        <FiChevronRight size={16} />
+        <FiChevronRight size={16} className="text-black" />
       </button>
     </div>
   );

@@ -1,135 +1,98 @@
-/**
- * ProductCard.jsx - Mahsulot kartochkasi
- *
- * Bu komponent barcha sahifalar uchun umumiy mahsulot kartochkasi.
- * Shop, Home, ProductDetail va boshqa sahifalarda ishlatiladi.
- *
- * Props (qabul qilinadigan ma'lumotlar):
- * @param {object} product - Mahsulot ma'lumotlari
- * @param {string} product._id       - Mahsulot IDsi (API dan keladi)
- * @param {string} product.name      - Mahsulot nomi
- * @param {string} product.image     - Rasm URL
- * @param {number} product.price     - Narx
- * @param {number} product.oldPrice  - Eski narx (chegirma uchun)
- * @param {number} product.rating    - Reyting (1-5)
- * @param {number} product.sold      - Sotilgan soni
- * @param {boolean} product.inStock  - Stokda bormi
- * @param {string} product.badge     - "NEW", "HOT", "SALE" kabi
- *
- * Ishlatilish namunasi:
- * <ProductCard product={mahsulot} />
- */
-
 import { Link } from "react-router-dom";
-import { FiHeart, FiShoppingCart, FiEye, FiStar } from "react-icons/fi";
+import { FiShoppingCart, FiStar } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 const ProductCard = ({ product }) => {
   // Savatchaga qo'shish
   const handleAddToCart = (e) => {
-    e.preventDefault(); // Link navigatsiyasini to'xtatish
-    // TODO: CartContext ga mahsulot qo'shing
+    e.preventDefault();
     toast.success(`${product?.name} savatchaga qo'shildi!`);
   };
 
-  // Sevimlilarga qo'shish
-  const handleAddToWishlist = (e) => {
-    e.preventDefault();
-    // TODO: WishlistContext ga mahsulot qo'shing
-    toast.info(`${product?.name} sevimlilarga qo'shildi!`);
-  };
-
-  // Chegirma foizini hisoblash
-  const discountPercent =
-    product?.oldPrice && product?.price
-      ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
-      : 0;
-
   return (
-    <div className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-all duration-300 relative">
+    <div className="group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg hover:border-green-200 transition-all duration-300 relative flex flex-col h-full">
       {/* ===== BADGE (NEW, HOT, SALE) ===== */}
       {product?.badge && (
         <span
-          className={`absolute top-2 left-2 z-10 text-white text-xs font-bold px-2 py-1 rounded ${
-            product.badge === "NEW"
-              ? "bg-green-500"
-              : product.badge === "HOT"
-              ? "bg-red-500"
-              : "bg-orange-500"
-          }`}
+          className={`absolute top-0 left-0 z-10 text-white text-[10px] font-bold px-4 py-1.5 rounded-br-2xl rounded-tl-2xl ${product.badge === "New"
+            ? "bg-[#3BB77E]"
+            : product.badge === "Hot"
+              ? "bg-[#FD6E6E]"
+              : product.badge === "Sale"
+                ? "bg-[#67bcee]"
+                : "bg-[#f74b81]"
+            }`}
         >
           {product.badge}
         </span>
       )}
 
       {/* Chegirma foizi */}
-      {discountPercent > 0 && (
-        <span className="absolute top-2 right-2 z-10 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-          -{discountPercent}%
+      {product?.discount && (
+        <span className="absolute top-0 right-0 z-10 bg-[#f74b81] text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-2xl rounded-tr-2xl">
+          {product.discount}
         </span>
       )}
 
       {/* ===== RASM ===== */}
-      <Link to={`/product/${product?._id}`} className="block overflow-hidden">
-        <div className="relative h-44 bg-gray-50 flex items-center justify-center p-4">
+      <Link to={`/product/${product?._id}`} className="block p-3 mt-2">
+        <div className="relative h-32 flex items-center justify-center overflow-hidden">
           <img
             src={product?.image || "/placeholder-product.jpg"}
             alt={product?.name}
-            className="h-full object-contain group-hover:scale-105 transition-transform duration-300"
+            className="h-full object-contain group-hover:scale-110 transition-transform duration-700"
           />
-
-          {/* Hover qilganda chiqadigan tugmalar */}
-          <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-            {/* Ko'rish */}
-            <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow hover:bg-green-500 hover:text-white transition-colors">
-              <FiEye size={14} />
-            </button>
-            {/* Sevimlillar */}
-            <button
-              onClick={handleAddToWishlist}
-              className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow hover:bg-green-500 hover:text-white transition-colors"
-            >
-              <FiHeart size={14} />
-            </button>
-          </div>
         </div>
       </Link>
 
       {/* ===== KONTENT ===== */}
-      <div className="p-3">
+      <div className="p-4 pt-0 flex flex-col grow">
+        {/* Kategoriya */}
+        <span className="text-[11px] text-[#ADADAD] mb-1">
+          {product?.category || "Category"}
+        </span>
+
         {/* Mahsulot nomi */}
-        <Link to={`/product/${product?._id}`}>
-          <h3 className="text-sm text-gray-700 font-medium line-clamp-2 hover:text-green-600 transition-colors mb-1">
+        <Link to={`/product/${product?._id}`} className="mb-2 min-h-[40px]">
+          <h3 className="text-[15px] text-[#253D4E] font-bold line-clamp-2 leading-tight hover:text-[#3BB77E] transition-colors">
             {product?.name || "Mahsulot nomi"}
           </h3>
         </Link>
 
         {/* Reyting yulduzlari */}
         <div className="flex items-center gap-1 mb-2">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <FiStar
-              key={star}
-              size={12}
-              className={
-                star <= (product?.rating || 0)
-                  ? "text-yellow-400 fill-yellow-400"
-                  : "text-gray-300"
-              }
-            />
-          ))}
-          <span className="text-xs text-gray-400">({product?.sold || 0})</span>
+          <div className="flex">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <FiStar
+                key={star}
+                size={12}
+                className={
+                  star <= Math.floor(product?.rating || 0)
+                    ? "text-[#FDC040] fill-[#FDC040]"
+                    : "text-[#D1D1D1]"
+                }
+              />
+            ))}
+          </div>
+          <span className="text-[12px] text-[#ADADAD]">({product?.rating?.toFixed(1) || "0.0"})</span>
+        </div>
+
+        {/* Vendor */}
+        <div className="mb-3">
+          <span className="text-[12px] text-[#ADADAD]">By </span>
+          <span className="text-[12px] text-[#3BB77E] hover:text-[#253D4E] cursor-pointer">
+            {product?.vendor || "NestFood"}
+          </span>
         </div>
 
         {/* Narx va tugma */}
-        <div className="flex items-center justify-between">
-          <div>
-            {/* Asosiy narx */}
-            <span className="text-green-600 font-bold text-sm">
+        <div className="flex items-center justify-between mt-auto gap-2">
+          <div className="flex flex-col">
+            <span className="text-[#3BB77E] font-bold text-lg leading-none">
               ${product?.price?.toFixed(2) || "0.00"}
             </span>
-            {/* Eski narx */}
             {product?.oldPrice && (
-              <span className="text-gray-400 text-xs line-through ml-1">
+              <span className="text-[#ADADAD] text-xs line-through mt-0.5">
                 ${product.oldPrice.toFixed(2)}
               </span>
             )}
@@ -138,9 +101,9 @@ const ProductCard = ({ product }) => {
           {/* Savatchaga qo'shish */}
           <button
             onClick={handleAddToCart}
-            className="flex items-center gap-1 bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1.5 rounded-full transition-colors"
+            className="flex items-center gap-1.5 bg-[#DEF9EC] hover:bg-[#3BB77E] text-[#3BB77E] hover:text-white text-[13px] font-bold px-3 py-2 rounded transition-all duration-300 whitespace-nowrap"
           >
-            <FiShoppingCart size={12} />
+            <FiShoppingCart size={15} />
             Add
           </button>
         </div>
