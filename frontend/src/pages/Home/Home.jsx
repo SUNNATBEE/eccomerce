@@ -49,8 +49,11 @@
  */
 
 // Komponentlarni import qilish (siz yaratasiz!)
-// import HeroSlider from "../../components/home/HeroSlider";
-// import PopularProducts from "../../components/home/PopularProducts";
+import BannerRow from "../../components/home/BannerRow.jsx";
+import DealsOfDay from "../../components/home/DealsOfDay.jsx";
+import HeroSlider from "../../components/home/HeroSlider";
+import PopularProducts from "../../components/home/PopularProducts.jsx";
+import ShopByCategory from "../../components/home/ShopByCategory.jsx";
 // import BannerRow from "../../components/home/BannerRow";
 // import DealsOfDay from "../../components/home/DealsOfDay";
 // import ShopByCategory from "../../components/home/ShopByCategory";
@@ -62,40 +65,40 @@ const Home = () => {
       {/* ===== 1. HERO SLIDER ===== */}
       {/* <HeroSlider /> */}
       {/* TODO: HeroSlider komponentini yaratib import qiling */}
-      <div className="bg-green-50 h-64 flex items-center justify-center text-green-600 font-medium">
-        🛒 HeroSlider - Bu yerga Swiper slider qo'ying (Firdavs)
+      <div className="">
+        {/* 🛒 HeroSlider - Bu yerga Swiper slider qo'ying (Firdavs) */}
+        <HeroSlider/>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="">
         {/* ===== 2. POPULAR PRODUCTS ===== */}
         {/* <PopularProducts /> */}
-        <div className="my-8 bg-gray-50 h-32 flex items-center justify-center text-gray-500 rounded-lg border-2 border-dashed">
-          Popular Products bo'limi (Firdavs)
-        </div>
+        {/* <div className="my-8 bg-gray-50 h-32 flex items-center justify-center text-gray-500 rounded-lg border-2 border-dashed"> */}
+          {/* Popular Products bo'limi (Firdavs) */}
+          <PopularProducts/>
+        {/* </div> */}
 
         {/* ===== 3. BANNER ROW ===== */}
         {/* <BannerRow /> */}
-        <div className="my-8 bg-gray-50 h-24 flex items-center justify-center text-gray-500 rounded-lg border-2 border-dashed">
-          Banner Row (Firdavs)
+        <div className="">
+          {/* Banner Row (Firdavs) */}
+          <DealsOfDay/>
         </div>
 
         {/* ===== 4. DEALS OF THE DAY ===== */}
         {/* <DealsOfDay /> */}
-        <div className="my-8 bg-gray-50 h-32 flex items-center justify-center text-gray-500 rounded-lg border-2 border-dashed">
-          Deals of the Day (Firdavs)
+        <div className="">
+          {/* Deals of the Day (Firdavs) */}
+          <BannerRow/>
         </div>
 
         {/* ===== 5. SHOP BY CATEGORY ===== */}
         {/* <ShopByCategory /> */}
-        <div className="my-8 bg-gray-50 h-32 flex items-center justify-center text-gray-500 rounded-lg border-2 border-dashed">
-          Shop By Category (Firdavs)
+        <div className="">
+          {/* Shop By Category (Firdavs) */}
+          <ShopByCategory/>
         </div>
 
-        {/* ===== 6. TAB PRODUCTS ===== */}
-        {/* <TabProducts /> */}
-        <div className="my-8 bg-gray-50 h-32 flex items-center justify-center text-gray-500 rounded-lg border-2 border-dashed">
-          Tab Products: Top Selling | Trending | Recently Added (Firdavs)
-        </div>
       </div>
     </div>
   );
