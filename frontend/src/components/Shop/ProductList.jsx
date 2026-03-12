@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Sahifalararo o'tish uchun
-import { FiStar, FiShoppingCart } from "react-icons/fi"; // Iconlar
+import { Link } from "react-router-dom"; // For navigation
+import { FiStar, FiShoppingCart } from "react-icons/fi"; // Icons
 import ProductCard from "../shared/ProductCard";
 import Pagination from "../shared/Pagination";
+import { useCart } from "../../context/CartContext";
+import { toast } from "react-toastify";
 
 const MOCK_PRODUCTS = [
     {
@@ -114,6 +116,7 @@ const MOCK_PRODUCTS = [
 ];
 
 const ProductList = ({ viewMode, currentPage, handlePageChange }) => {
+    const { addToCart } = useCart();
     return (
         <div className="flex-1 min-w-0">
             {viewMode === "grid" ? (
@@ -132,19 +135,19 @@ const ProductList = ({ viewMode, currentPage, handlePageChange }) => {
                             key={product._id}
                             className="bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-6 hover:shadow-lg transition-all duration-300"
                         >
-                            {/* Mahsulot rasmiga bosganda o'tish */}
+                            {/* Navigate to product detail on image click */}
                             <Link to={`/product/${product._id}`} className="w-32 h-32 shrink-0 overflow-hidden rounded-lg">
-                                <img 
-                                    src={product.image} 
-                                    alt={product.name} 
-                                    className="w-full h-full object-contain hover:scale-110 transition-transform duration-500" 
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className="w-full h-full object-contain hover:scale-110 transition-transform duration-500"
                                 />
                             </Link>
 
                             <div className="grow">
                                 <span className="text-xs text-[#ADADAD]">{product.category}</span>
-                                
-                                {/* Mahsulot nomiga bosganda o'tish */}
+
+                                {/* Navigate to product detail on name click */}
                                 <Link to={`/product/${product._id}`}>
                                     <h3 className="text-lg font-bold text-[#253D4E] hover:text-[#3BB77E] transition-colors leading-tight mb-2">
                                         {product.name}
@@ -154,10 +157,10 @@ const ProductList = ({ viewMode, currentPage, handlePageChange }) => {
                                 <div className="flex items-center gap-2 my-2">
                                     <div className="flex">
                                         {[1, 2, 3, 4, 5].map((star) => (
-                                            <FiStar 
-                                                key={star} 
-                                                size={12} 
-                                                className={star <= product.rating ? "text-[#FDC040] fill-[#FDC040]" : "text-[#D1D1D1]"} 
+                                            <FiStar
+                                                key={star}
+                                                size={12}
+                                                className={star <= product.rating ? "text-[#FDC040] fill-[#FDC040]" : "text-[#D1D1D1]"}
                                             />
                                         ))}
                                     </div>
@@ -173,7 +176,13 @@ const ProductList = ({ viewMode, currentPage, handlePageChange }) => {
                                         <span className="text-sm text-[#ADADAD] line-through">${product.oldPrice.toFixed(2)}</span>
                                     )}
                                 </div>
-                                <button className="flex items-center gap-2 bg-[#3BB77E] text-white px-5 py-2 rounded-lg font-bold hover:bg-[#29A56C] transition-all shadow-sm active:scale-95">
+                                <button
+                                    onClick={() => {
+                                        addToCart(product);
+                                        toast.success(`${product.name} added to cart!`);
+                                    }}
+                                    className="flex items-center gap-2 bg-[#3BB77E] text-white px-5 py-2 rounded-lg font-bold hover:bg-[#29A56C] transition-all shadow-sm active:scale-95"
+                                >
                                     <FiShoppingCart />
                                     Add
                                 </button>

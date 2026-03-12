@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { HiOutlineShoppingCart } from 'react-icons/hi';
 import { AiFillStar } from 'react-icons/ai';
 import { FiChevronRight } from 'react-icons/fi';
+import { useCart } from '../../context/CartContext';
+import { toast } from 'react-toastify';
 
 const DealCard = ({ deal }) => {
+    const { addToCart } = useCart();
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
     function calculateTimeLeft() {
@@ -68,7 +71,19 @@ const DealCard = ({ deal }) => {
                         <span className="text-green-600 font-bold text-xl">${deal.price}</span>
                         <span className="text-gray-400 line-through text-sm">${deal.oldPrice}</span>
                     </div>
-                    <button className="flex items-center gap-2 bg-green-50 hover:bg-green-600 text-green-600 hover:text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 group/btn">
+                    <button
+                        onClick={() => {
+                            addToCart({
+                                _id: deal.id,
+                                name: deal.title,
+                                price: deal.price,
+                                image: deal.image,
+                                category: deal.brand
+                            });
+                            toast.success(`${deal.title} added to cart!`);
+                        }}
+                        className="flex items-center gap-2 bg-green-50 hover:bg-green-600 text-green-600 hover:text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 group/btn"
+                    >
                         <HiOutlineShoppingCart size={18} className="group-hover/btn:scale-110 transition-transform" />
                         <span className="text-sm">Add</span>
                     </button>

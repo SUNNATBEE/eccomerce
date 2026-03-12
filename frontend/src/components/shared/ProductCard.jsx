@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import { FiShoppingCart, FiStar } from "react-icons/fi";
 import { toast } from "react-toastify";
+import { useCart } from "../../context/CartContext";
 
 const ProductCard = ({ product }) => {
+  const { addToCart } = useCart();
+
   // Savatchaga qo'shish
   const handleAddToCart = (e) => {
     e.preventDefault();
+    addToCart(product);
     toast.success(`${product?.name} savatchaga qo'shildi!`);
   };
 

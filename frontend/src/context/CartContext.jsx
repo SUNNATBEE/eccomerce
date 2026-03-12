@@ -70,10 +70,7 @@ export const CartProvider = ({ children }) => {
    * @param {number} quantity  - Yangi miqdor
    */
   const updateQuantity = (productId, quantity) => {
-    if (quantity < 1) {
-      removeFromCart(productId);
-      return;
-    }
+    if (quantity < 1) return; // Prevent 0 or negative
     setCartItems((prev) =>
       prev.map((item) =>
         item._id === productId ? { ...item, quantity } : item

@@ -1,25 +1,23 @@
 /**
- * Header.jsx - Sayt sarlavhasi (Navigatsiya)
+ * Header.jsx - Site Header (Navigation)
  *
- * Figma UI ga qarab:
+ * Based on Figma UI:
  * ┌─────────────────────────────────────────────────────────┐
- * │  TOP BAR: Til tanlash | Valyuta | Login/Register links  │
+ * │  TOP BAR: Language | Currency | Login/Register links     │
  * ├─────────────────────────────────────────────────────────┤
- * │  LOGO | Qidiruv | Buyurtmalar | Sevimlillar | Savatcha  │
+ * │  LOGO | Search | Orders | Wishlist | Cart                │
  * ├─────────────────────────────────────────────────────────┤
  * │  Browse All Categories | Home | About | Shop | Blog ... │
  * └─────────────────────────────────────────────────────────┘
  *
- * Ishlatilgan kutubxonalar:
- * - react-router-dom: NavLink (active link uchun)
- * - react-icons: ikonlar uchun
- *
- * Bu faylni o'zgartirish kerak EMAS.
- * Hamma jamoaga umumiy.
+ * Libraries used:
+ * - react-router-dom: NavLink (for active links)
+ * - react-icons: for icons
  */
 
 import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
 import {
   FiSearch,
   FiShoppingCart,
@@ -31,7 +29,7 @@ import {
   FiChevronDown,
 } from "react-icons/fi";
 
-// Navigatsiya linklari - yangi sahifa qo'shilsa shu yerga yozing
+// Navigation links - add new pages here
 const NAV_LINKS = [
   { path: "/", label: "Home" },
   { path: "/about", label: "About" },
@@ -41,6 +39,7 @@ const NAV_LINKS = [
 ];
 
 const Header = () => {
+  const { cartCount } = useCart();
   // Mobil menyu ochiq/yopiq holati
   const [mobileOpen, setMobileOpen] = useState(false);
   // Qidiruv maydoni qiymati
@@ -49,16 +48,16 @@ const Header = () => {
   // Qidiruv formasi submit bo'lganda
   const handleSearch = (e) => {
     e.preventDefault();
-    // TODO: Qidiruv funksionalligi qo'shing
-    console.log("Qidirildi:", searchQuery);
+    // TODO: Add search functionality
+    console.log("Searched:", searchQuery);
   };
 
   return (
     <header className="w-full bg-white shadow-sm sticky top-0 z-50">
-      {/* ===== 1-QISM: TOP BAR ===== */}
+      {/* ===== PART 1: TOP BAR ===== */}
       <div className="bg-[#f4f6fa] py-2 text-sm text-gray-600">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-          {/* Chap tomon - til va valyuta */}
+          {/* Left side - language and currency */}
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1 cursor-pointer hover:text-green-600">
               Eng <FiChevronDown size={12} />
@@ -68,7 +67,7 @@ const Header = () => {
             </span>
           </div>
 
-          {/* O'ng tomon - login/register */}
+          {/* Right side - login/register */}
           <div className="flex items-center gap-4">
             <Link to="/login" className="hover:text-green-600 transition-colors">
               Login
@@ -81,24 +80,24 @@ const Header = () => {
         </div>
       </div>
 
-      {/* ===== 2-QISM: LOGO + QIDIRUV + IKONLAR ===== */}
+      {/* ===== PART 2: LOGO + SEARCH + ICONS ===== */}
       <div className="max-w-7xl mx-auto px-4 py-3">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 flex-shrink-0">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
             <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-xs">N</span>
             </div>
             <span className="text-xl font-bold text-green-600">Nest</span>
           </Link>
 
-          {/* Qidiruv qutisi */}
+          {/* Search box */}
           <form
             onSubmit={handleSearch}
             className="flex-1 max-w-2xl hidden md:flex"
           >
             <div className="flex w-full border border-gray-300 rounded-full overflow-hidden">
-              {/* Kategoriya tanlash */}
+              {/* Category selection */}
               <select className="px-3 py-2 text-sm bg-white border-r border-gray-300 outline-none text-gray-600">
                 <option>All Categories</option>
                 <option>Vegetables</option>
@@ -107,7 +106,7 @@ const Header = () => {
                 <option>Beverages</option>
               </select>
 
-              {/* Qidiruv input */}
+              {/* Search input */}
               <input
                 type="text"
                 placeholder="Search for items..."
@@ -116,7 +115,7 @@ const Header = () => {
                 className="flex-1 px-4 py-2 text-sm outline-none"
               />
 
-              {/* Qidiruv tugmasi */}
+              {/* Search button */}
               <button
                 type="submit"
                 className="px-5 bg-green-500 hover:bg-green-600 transition-colors text-white"
@@ -126,41 +125,43 @@ const Header = () => {
             </div>
           </form>
 
-          {/* O'ng tomon - ikonlar */}
+          {/* Right side - icons */}
           <div className="flex items-center gap-4">
-            {/* Telefon raqam */}
+            {/* Phone number */}
             <div className="hidden lg:flex items-center gap-2 text-sm text-gray-600">
               <FiPhone className="text-green-500" />
               <span>1900 - 888</span>
             </div>
 
-            {/* Sevimlillar */}
+            {/* Wishlist */}
             <Link
               to="/wishlist"
               className="relative flex flex-col items-center text-gray-600 hover:text-green-600 transition-colors"
             >
               <FiHeart size={22} />
               <span className="text-xs hidden md:block">Wishlist</span>
-              {/* Badge - sevimlillar soni */}
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+              {/* Badge - wishlist count */}
+              {/* <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                 0
-              </span>
+              </span> */}
             </Link>
 
-            {/* Savatcha */}
+            {/* Cart */}
             <Link
               to="/cart"
               className="relative flex flex-col items-center text-gray-600 hover:text-green-600 transition-colors"
             >
               <FiShoppingCart size={22} />
               <span className="text-xs hidden md:block">Cart</span>
-              {/* Badge - savatcadagi mahsulotlar soni */}
-              <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                0
-              </span>
+              {/* Badge - cart items count */}
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-green-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center animate-in zoom-in duration-300">
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
-            {/* Profil */}
+            {/* Profile */}
             <Link
               to="/profile"
               className="flex flex-col items-center text-gray-600 hover:text-green-600 transition-colors"
@@ -169,7 +170,7 @@ const Header = () => {
               <span className="text-xs hidden md:block">Account</span>
             </Link>
 
-            {/* Mobil menyu tugmasi */}
+            {/* Mobile menu button */}
             <button
               className="md:hidden text-gray-600"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -180,27 +181,26 @@ const Header = () => {
         </div>
       </div>
 
-      {/* ===== 3-QISM: ASOSIY NAVIGATSIYA ===== */}
+      {/* ===== PART 3: MAIN NAVIGATION ===== */}
       <nav className="bg-white border-t border-gray-100 hidden md:block">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center gap-1">
-            {/* Browse All Categories tugmasi */}
+            {/* Browse All Categories button */}
             <button className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 text-sm font-medium transition-colors">
               <FiMenu size={16} />
               Browse All Categories
             </button>
 
-            {/* Nav linklari */}
+            {/* Nav links */}
             {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
                 end={link.path === "/"}
                 className={({ isActive }) =>
-                  `px-4 py-3 text-sm font-medium transition-colors ${
-                    isActive
-                      ? "text-green-600 border-b-2 border-green-500"
-                      : "text-gray-700 hover:text-green-600"
+                  `px-4 py-3 text-sm font-medium transition-colors ${isActive
+                    ? "text-green-600 border-b-2 border-green-500"
+                    : "text-gray-700 hover:text-green-600"
                   }`
                 }
               >
@@ -211,10 +211,10 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* ===== MOBIL MENYU ===== */}
+      {/* ===== MOBILE MENU ===== */}
       {mobileOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 px-4 py-3">
-          {/* Mobil qidiruv */}
+          {/* Mobile search */}
           <form onSubmit={handleSearch} className="flex mb-4">
             <input
               type="text"
@@ -231,7 +231,7 @@ const Header = () => {
             </button>
           </form>
 
-          {/* Mobil nav linklari */}
+          {/* Mobile nav links */}
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.path}
@@ -239,8 +239,7 @@ const Header = () => {
               end={link.path === "/"}
               onClick={() => setMobileOpen(false)}
               className={({ isActive }) =>
-                `block py-2 text-sm font-medium border-b border-gray-100 ${
-                  isActive ? "text-green-600" : "text-gray-700"
+                `block py-2 text-sm font-medium border-b border-gray-100 ${isActive ? "text-green-600" : "text-gray-700"
                 }`
               }
             >
