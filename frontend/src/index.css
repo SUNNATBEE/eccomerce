@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @plugin "daisyui";
+.swiper-pagination-bullet {
+    background: white;
+    opacity: 0.5;
+  }
+  
+  .swiper-pagination-bullet-active {
+    background: #22c55e;
+    opacity: 1;
+  }

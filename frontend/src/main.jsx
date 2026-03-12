@@ -13,10 +13,10 @@ import App from './App.jsx'
 import { CartProvider } from './context/CartContext.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <>
     {/* CartProvider - savatcha holati barcha sahifalarda mavjud bo'ladi */}
     <CartProvider>
       <App />
     </CartProvider>
-  </StrictMode>,
+  </>,
 )
