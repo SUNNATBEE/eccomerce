@@ -3,6 +3,7 @@ import { FiTrash2, FiMinus, FiPlus, FiShoppingBag, FiArrowLeft } from "react-ico
 import Breadcrumb from "../../components/shared/Breadcrumb";
 import { useCart } from "../../context/CartContext";
 import { toast } from "react-toastify";
+import { sendTelegramNotification } from "../../utils/telegram";
 
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, cartTotal, clearCart } = useCart();
@@ -184,7 +185,40 @@ const Cart = () => {
               </div>
 
               <button
-                onClick={() => toast.success("Your order has been placed!")}
+                onClick={async () => {
+                  if (cartItems.length === 0) return;
+
+                  // Format order message
+                  const orderItemsMsg = cartItems
+                    .map(
+                      (item) =>
+                        `• <b>${item.name}</b>\n  ${item.quantity} x $${item.price.toFixed(2)} = $${(
+                          item.quantity * item.price
+                        ).toFixed(2)}`
+                    )
+                    .join("\n\n");
+
+                  const message = `
+<b>🛍 Yangi Buyurtma!</b>
+
+<b>Mijoz:</b> Me (Placeholder)
+<b>Jami:</b> $${cartTotal.toFixed(2)}
+
+<b>Mahsulotlar:</b>
+${orderItemsMsg}
+
+<b>Sana:</b> ${new Date().toLocaleString()}
+`.trim();
+
+                  const success = await sendTelegramNotification(message);
+
+                  if (success) {
+                    toast.success("Buyurtmangiz muvaffaqiyatli qabul qilindi!");
+                    clearCart();
+                  } else {
+                    toast.error("Buyurtma yuborishda xatolik yuz berdi. Iltimos qaytadan urinib ko'ring.");
+                  }
+                }}
                 className="w-full bg-[#3BB77E] hover:bg-[#253D4E] text-white py-4 rounded-2xl font-bold text-lg transition-all shadow-lg flex items-center justify-center gap-2 group"
               >
                 Place Order <FiShoppingBag className="group-hover:translate-x-1 transition-transform" />
