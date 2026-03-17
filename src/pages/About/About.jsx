@@ -120,7 +120,7 @@ const About = () => {
 
       <footer className='mb-20 mt-35'>
         <img src="/Footer.png" alt="footer"/>
-        <div></div>
+      
       </footer>
 
     </div>
